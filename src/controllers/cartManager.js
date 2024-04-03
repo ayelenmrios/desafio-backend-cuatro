@@ -6,8 +6,6 @@ class cartManager {
         this.carts = [];
         this.path = archivo;
         this.lastId = 0;
-
-        // Cargo los carritos que estan en enl archivo:
         this.cargarCarritos();
     }
     //////////////////////////
@@ -28,28 +26,7 @@ class cartManager {
         await fs.writeFile(this.path, JSON.stringify(this.carts, null, 2));
     }
 
-    async crearCarrito(){
-        // Array
-        const nuevoCarrito = {
-            id: ++this.lastId, 
-            productos: []
-        }
-        this.carts.push(nuevoCarrito);
-        await this.guardarCarritos();
-    }
-
-    async getCarritoById(carritoId){
-        const buscoCarrito = this.carts.find(c => c.id === carritoId);
-        if(!buscoCarrito){
-            console.log("No existe carrito.");
-        } else{
-            return buscoCarrito;
-        }
-
-    }
-    /////////////////////////
-    // REVISAR --------------
-    // Agregar producto al carrito
+    ////
     async agregarProdCarrito(carroId, prodId, cant = 1){
         const carrito = await this.getCarritoById(carroId);
         const prodExistente = carrito.products.find(p => p.product === prodId);
@@ -64,6 +41,28 @@ class cartManager {
         return carrito;
 
     }
+
+    async crearCarrito(){
+        // Array
+        const nuevoCarrito = {
+            id: ++this.lastId, 
+            productos: []
+        }
+        this.carts.push(nuevoCarrito);
+        await this.guardarCarritos();
+        return nuevoCarrito;
+    }
+
+    async getCarritoById(carritoId){
+        const buscoCarrito = this.carts.find(c => c.id === carritoId);
+        if(!buscoCarrito){
+            console.log("No existe carrito.");
+        } else{
+            return buscoCarrito;
+        }
+
+    }
+
 }
 
 // Exportación de la clase

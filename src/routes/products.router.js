@@ -4,7 +4,7 @@ const router = express.Router();
 const ProductManager = require("../controllers/productManager.js");
 const manager = new ProductManager("./src/models/archivoProductos.json");
 
-// Obtengo todos los prodcutos del JSON
+
 router.get("/products", async (request, response) => {
     const limit = request.query.limit;
 
@@ -16,7 +16,7 @@ router.get("/products", async (request, response) => {
     }
    
 })
-// Obtener un producto por id
+
 router.get("/products/:pid", async (request, response) => {
     const id = request.params.pid;
 
@@ -28,42 +28,44 @@ router.get("/products/:pid", async (request, response) => {
     }
     response.json(producto);
 })
-// Agregar un nuevo producto
+
+// Agregar
 router.post("/products", async (request, response) => {
     const nuevoProducto = request.body;
     try {
         await manager.addProduct(nuevoProducto);
         response.status(200).json({message: "Se agregó un nuevo producto!"});
     } catch (error){
-        response.status(500).json({error: "Error interno del servidor"});
+        response.status(500).json({error: "Problemas con el servidor"});
     }
 })
-// Actrualizar por id
+
+// Actualizar 
 router.put("/products/:pid", async (request, response) => {
     const id = request.params.pid;
-    const productoActualizado = request.body;
+    const prodActualizado = request.body;
 
     try{
         // 
-        await manager.updateProduct(parseInt(id), productoActualizado);
+        await manager.updateProduct(parseInt(id), prodActualizado);
         response.json({message: "Producto actualizado correctamente!"});
     } catch(error){
         // 
         response.status(500).json({error: "Error interno del servidor"});
     }
 })
-// Eliminar producto
 
+// Eliminar
 router.delete("/products/:pid", async (request, response) => {
     const id = request.params.pid;
 
     try{
         await manager.deleteProduct(parseInt(id));
-        response.json({message: "Producto eliminado muy bien!"});
+        response.json({message: "Producto eliminado!"});
     } catch (error){
-        response.status(500).json({error: "Erro interno del servidor"});
+        response.status(500).json({error: "Problemas con el servidor"});
     }
 })
 
-///////////////////////////////////
+/////////////////
 module.exports = router;

@@ -40,7 +40,7 @@ class ProductManager {
         this.products.push(newProduct);
         await this.guardarArchivos(this.products);
     }
-    /////////////////////////////////
+    /////////////////
     // MÉTODOS
     async getProducts(){
         const lectura = await this.leerProductos();
@@ -106,11 +106,9 @@ class ProductManager {
             throw error;
         }
     }
-
-    //////////////////////////
 }
-//////////////////////////////////////
-const ruta = new ProductManager("./archivoProductos.json");
+///////////
+// const ruta = new ProductManager("./archivoProductos.json");
 
-// Exportación
+//////////
 module.exports = ProductManager;
